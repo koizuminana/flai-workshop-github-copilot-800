@@ -2,6 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.db.models import Q
+from bson import ObjectId
 from .models import User, Team, Activity, Leaderboard, Workout
 from .serializers import (
     UserSerializer, TeamSerializer, ActivitySerializer, 
@@ -16,6 +17,18 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    
+    def get_object(self):
+        """Override to handle ObjectId lookups"""
+        pk = self.kwargs.get('pk')
+        try:
+            obj_id = ObjectId(pk)
+            obj = User.objects.get(_id=obj_id)
+            self.check_object_permissions(self.request, obj)
+            return obj
+        except (User.DoesNotExist, Exception):
+            from rest_framework.exceptions import NotFound
+            raise NotFound('User not found')
     
     def get_queryset(self):
         """Filter users by team_id if provided"""
@@ -54,6 +67,18 @@ class TeamViewSet(viewsets.ModelViewSet):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
     
+    def get_object(self):
+        """Override to handle ObjectId lookups"""
+        pk = self.kwargs.get('pk')
+        try:
+            obj_id = ObjectId(pk)
+            obj = Team.objects.get(_id=obj_id)
+            self.check_object_permissions(self.request, obj)
+            return obj
+        except (Team.DoesNotExist, Exception):
+            from rest_framework.exceptions import NotFound
+            raise NotFound('Team not found')
+    
     @action(detail=True, methods=['get'])
     def members(self, request, pk=None):
         """Get all members of a team"""
@@ -90,6 +115,18 @@ class ActivityViewSet(viewsets.ModelViewSet):
     queryset = Activity.objects.all()
     serializer_class = ActivitySerializer
     
+    def get_object(self):
+        """Override to handle ObjectId lookups"""
+        pk = self.kwargs.get('pk')
+        try:
+            obj_id = ObjectId(pk)
+            obj = Activity.objects.get(_id=obj_id)
+            self.check_object_permissions(self.request, obj)
+            return obj
+        except (Activity.DoesNotExist, Exception):
+            from rest_framework.exceptions import NotFound
+            raise NotFound('Activity not found')
+    
     def get_queryset(self):
         """Filter activities by user_id and activity_type if provided"""
         queryset = Activity.objects.all().order_by('-date')
@@ -119,6 +156,18 @@ class LeaderboardViewSet(viewsets.ModelViewSet):
     queryset = Leaderboard.objects.all().order_by('rank')
     serializer_class = LeaderboardSerializer
     
+    def get_object(self):
+        """Override to handle ObjectId lookups"""
+        pk = self.kwargs.get('pk')
+        try:
+            obj_id = ObjectId(pk)
+            obj = Leaderboard.objects.get(_id=obj_id)
+            self.check_object_permissions(self.request, obj)
+            return obj
+        except (Leaderboard.DoesNotExist, Exception):
+            from rest_framework.exceptions import NotFound
+            raise NotFound('Leaderboard entry not found')
+    
     def get_queryset(self):
         """Filter leaderboard by team_id if provided"""
         queryset = Leaderboard.objects.all().order_by('rank')
@@ -143,6 +192,18 @@ class WorkoutViewSet(viewsets.ModelViewSet):
     """
     queryset = Workout.objects.all()
     serializer_class = WorkoutSerializer
+    
+    def get_object(self):
+        """Override to handle ObjectId lookups"""
+        pk = self.kwargs.get('pk')
+        try:
+            obj_id = ObjectId(pk)
+            obj = Workout.objects.get(_id=obj_id)
+            self.check_object_permissions(self.request, obj)
+            return obj
+        except (Workout.DoesNotExist, Exception):
+            from rest_framework.exceptions import NotFound
+            raise NotFound('Workout not found')
     
     def get_queryset(self):
         """Filter workouts by activity_type and difficulty if provided"""

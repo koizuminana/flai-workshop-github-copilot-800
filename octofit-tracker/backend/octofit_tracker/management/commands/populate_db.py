@@ -38,33 +38,43 @@ class Command(BaseCommand):
         self.stdout.write('Creating Marvel heroes...')
         marvel_users = [
             User.objects.create(
+                name='Tony Stark',
                 email='ironman@marvel.com',
                 username='Iron Man',
                 password='iamironman',
+                fitness_level='advanced',
                 team_id=str(team_marvel._id)
             ),
             User.objects.create(
+                name='Steve Rogers',
                 email='captainamerica@marvel.com',
                 username='Captain America',
                 password='avengersassemble',
+                fitness_level='advanced',
                 team_id=str(team_marvel._id)
             ),
             User.objects.create(
+                name='Thor Odinson',
                 email='thor@marvel.com',
                 username='Thor',
                 password='worthyofmjolnir',
+                fitness_level='expert',
                 team_id=str(team_marvel._id)
             ),
             User.objects.create(
+                name='Natasha Romanoff',
                 email='blackwidow@marvel.com',
                 username='Black Widow',
                 password='redledger',
+                fitness_level='advanced',
                 team_id=str(team_marvel._id)
             ),
             User.objects.create(
+                name='Bruce Banner',
                 email='hulk@marvel.com',
                 username='Hulk',
                 password='hulksmash',
+                fitness_level='expert',
                 team_id=str(team_marvel._id)
             ),
         ]
@@ -75,33 +85,43 @@ class Command(BaseCommand):
         self.stdout.write('Creating DC heroes...')
         dc_users = [
             User.objects.create(
+                name='Clark Kent',
                 email='superman@dc.com',
                 username='Superman',
                 password='krypton',
+                fitness_level='expert',
                 team_id=str(team_dc._id)
             ),
             User.objects.create(
+                name='Bruce Wayne',
                 email='batman@dc.com',
                 username='Batman',
                 password='darkknight',
+                fitness_level='advanced',
                 team_id=str(team_dc._id)
             ),
             User.objects.create(
+                name='Diana Prince',
                 email='wonderwoman@dc.com',
                 username='Wonder Woman',
                 password='amazonian',
+                fitness_level='expert',
                 team_id=str(team_dc._id)
             ),
             User.objects.create(
+                name='Barry Allen',
                 email='flash@dc.com',
                 username='The Flash',
                 password='speedforce',
+                fitness_level='advanced',
                 team_id=str(team_dc._id)
             ),
             User.objects.create(
+                name='Arthur Curry',
                 email='aquaman@dc.com',
                 username='Aquaman',
                 password='atlantis',
+                fitness_level='intermediate',
                 team_id=str(team_dc._id)
             ),
         ]
